@@ -1,7 +1,5 @@
 package com.epam.rd.autocode.bstprettyprint;
 
-import java.io.IOException;
-
 import static com.epam.rd.autocode.bstprettyprint.SpaceWriter.writeSpaces;
 
 public class Node {
@@ -40,6 +38,7 @@ public class Node {
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+
         if (right != null) {
             stringBuilder.append(right.printTree(true, ""));
         }
@@ -47,30 +46,26 @@ public class Node {
         stringBuilder.append(printNodeValue());
 
         if (left != null) {
-
             stringBuilder.append(left.printTree(false, ""));
-
         }
+
         return stringBuilder.toString();
     }
 
     private String printNodeValue() {
         StringBuilder stringBuilder = new StringBuilder();
-        if (value == null) {
-            stringBuilder.append("<null>");
-        } else {
-            if (right != null && left != null) {
-                stringBuilder.append(value.toString()).append("┤");
-            }
-            if (right != null && left == null) {
-                stringBuilder.append(value.toString()).append("┘");
-            }
-            if (right == null && left != null) {
-                stringBuilder.append(value.toString()).append("┐");
-            }
-            if (right == null && left == null) {
-                stringBuilder.append(value.toString());
-            }
+
+        if (right != null && left != null) {
+            stringBuilder.append(value.toString()).append("┤");
+        }
+        if (right != null && left == null) {
+            stringBuilder.append(value.toString()).append("┘");
+        }
+        if (right == null && left != null) {
+            stringBuilder.append(value.toString()).append("┐");
+        }
+        if (right == null && left == null) {
+            stringBuilder.append(value.toString());
         }
 
         stringBuilder.append('\n');
@@ -78,12 +73,11 @@ public class Node {
     }
 
 
-    private String printTree(boolean isRight, String indent){
+    private String printTree(boolean isRight, String indent) {
         StringBuilder stringBuilder = new StringBuilder();
         String spaces = writeSpaces(value);
         if (right != null) {
-            stringBuilder.append(spaces);
-            stringBuilder.append(right.printTree(true, indent + (isRight ? " " : "│")));
+            stringBuilder.append(right.printTree(true, indent + spaces + (isRight ? " " : "│")));
         }
 
         stringBuilder.append(indent);
@@ -99,7 +93,7 @@ public class Node {
         stringBuilder.append(printNodeValue());
 
         if (left != null) {
-            stringBuilder.append(left.printTree(false, indent + (isRight ? "  │" : "  ")));
+            stringBuilder.append(left.printTree(false, indent + spaces + (isRight ? "│" : " ")));
         }
 
         return stringBuilder.toString();
