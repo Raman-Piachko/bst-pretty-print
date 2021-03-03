@@ -1,10 +1,11 @@
 package com.epam.rd.autocode.bstprettyprint;
 
-import static com.epam.rd.autocode.bstprettyprint.SpaceWriter.writeSpaces;
+import static com.epam.rd.autocode.bstprettyprint.SpaceWriter.makeSpaces;
 
 public class Node {
-    Integer value;
-    Node left, right;
+    private Integer parent;
+    private Integer value;
+    private Node left, right;
 
     Node(int value) {
         this.value = value;
@@ -26,6 +27,7 @@ public class Node {
 
     public void setLeft(Node left) {
         this.left = left;
+        left.parent = value;
     }
 
     public Node getRight() {
@@ -34,6 +36,7 @@ public class Node {
 
     public void setRight(Node right) {
         this.right = right;
+        right.parent = value;
     }
 
     public String toString() {
@@ -75,7 +78,8 @@ public class Node {
 
     private String printTree(boolean isRight, String indent) {
         StringBuilder stringBuilder = new StringBuilder();
-        String spaces = writeSpaces(value);
+        String spaces = makeSpaces(parent);
+
         if (right != null) {
             stringBuilder.append(right.printTree(true, indent + spaces + (isRight ? " " : "│")));
         }
