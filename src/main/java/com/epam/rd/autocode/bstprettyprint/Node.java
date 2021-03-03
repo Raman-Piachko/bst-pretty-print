@@ -1,10 +1,19 @@
 package com.epam.rd.autocode.bstprettyprint;
 
-import static com.epam.rd.autocode.bstprettyprint.SpaceWriter.writeSpaces;
+import static com.epam.rd.autocode.bstprettyprint.SpaceWriter.makeSpaces;
 
 public class Node {
-    Integer value;
-    Node left, right;
+    public static final String INDENT = "";
+    public static final String DOUBLE_ROOT = "┤";
+    public static final String UP_ROOT = "┘";
+    public static final String DOWN_ROOT = "┐";
+    public static final String SPACE = " ";
+    public static final String LINE = "│";
+    public static final String UP = "┌";
+    public static final String DOWN = "└";
+    private Integer parent;
+    private Integer value;
+    private Node left, right;
 
     Node(int value) {
         this.value = value;
@@ -26,6 +35,7 @@ public class Node {
 
     public void setLeft(Node left) {
         this.left = left;
+        left.parent = value;
     }
 
     public Node getRight() {
@@ -34,19 +44,20 @@ public class Node {
 
     public void setRight(Node right) {
         this.right = right;
+        right.parent = value;
     }
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (right != null) {
-            stringBuilder.append(right.printTree(true, ""));
+            stringBuilder.append(right.printTree(true, INDENT));
         }
 
         stringBuilder.append(printNodeValue());
 
         if (left != null) {
-            stringBuilder.append(left.printTree(false, ""));
+            stringBuilder.append(left.printTree(false, INDENT));
         }
 
         return stringBuilder.toString();
@@ -56,13 +67,13 @@ public class Node {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (right != null && left != null) {
-            stringBuilder.append(value.toString()).append("┤");
+            stringBuilder.append(value.toString()).append(DOUBLE_ROOT);
         }
         if (right != null && left == null) {
-            stringBuilder.append(value.toString()).append("┘");
+            stringBuilder.append(value.toString()).append(UP_ROOT);
         }
         if (right == null && left != null) {
-            stringBuilder.append(value.toString()).append("┐");
+            stringBuilder.append(value.toString()).append(DOWN_ROOT);
         }
         if (right == null && left == null) {
             stringBuilder.append(value.toString());
@@ -75,25 +86,25 @@ public class Node {
 
     private String printTree(boolean isRight, String indent) {
         StringBuilder stringBuilder = new StringBuilder();
-        String spaces = writeSpaces(value);
+        String spaces = makeSpaces(parent);
+
         if (right != null) {
-            stringBuilder.append(right.printTree(true, indent + spaces + (isRight ? " " : "│")));
+            stringBuilder.append(right.printTree(true, indent + spaces + (isRight ? SPACE : LINE)));
         }
 
         stringBuilder.append(indent);
+        stringBuilder.append(spaces);
 
         if (isRight) {
-            stringBuilder.append(spaces);
-            stringBuilder.append("┌");
+            stringBuilder.append(UP);
         } else {
-            stringBuilder.append(spaces);
-            stringBuilder.append("└");
+            stringBuilder.append(DOWN);
         }
 
         stringBuilder.append(printNodeValue());
 
         if (left != null) {
-            stringBuilder.append(left.printTree(false, indent + spaces + (isRight ? "│" : " ")));
+            stringBuilder.append(left.printTree(false, indent + spaces + (isRight ? LINE : SPACE)));
         }
 
         return stringBuilder.toString();
