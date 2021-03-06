@@ -3,9 +3,6 @@ package com.epam.rd.autocode.bstprettyprint;
 public class PrintableTreeImpl implements PrintableTree {
     private Node root;
 
-    public PrintableTreeImpl() {
-    }
-
     @Override
     public void add(int i) {
         root = addRecursive(root, i);

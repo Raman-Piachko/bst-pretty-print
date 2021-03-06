@@ -1,16 +1,17 @@
 package com.epam.rd.autocode.bstprettyprint;
 
 import static com.epam.rd.autocode.bstprettyprint.SpaceWriter.makeSpaces;
+import static com.epam.rd.autocode.bstprettyprint.TreeConstants.DOUBLE_ROOT;
+import static com.epam.rd.autocode.bstprettyprint.TreeConstants.DOWN;
+import static com.epam.rd.autocode.bstprettyprint.TreeConstants.DOWN_ROOT;
+import static com.epam.rd.autocode.bstprettyprint.TreeConstants.INDENT;
+import static com.epam.rd.autocode.bstprettyprint.TreeConstants.LINE;
+import static com.epam.rd.autocode.bstprettyprint.TreeConstants.SPACE;
+import static com.epam.rd.autocode.bstprettyprint.TreeConstants.UP;
+import static com.epam.rd.autocode.bstprettyprint.TreeConstants.UP_ROOT;
 
 public class Node {
-    public static final String INDENT = "";
-    public static final String DOUBLE_ROOT = "┤";
-    public static final String UP_ROOT = "┘";
-    public static final String DOWN_ROOT = "┐";
-    public static final String SPACE = " ";
-    public static final String LINE = "│";
-    public static final String UP = "┌";
-    public static final String DOWN = "└";
+
     private Integer parent;
     private Integer value;
     private Node left, right;
